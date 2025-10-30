@@ -2,7 +2,6 @@
 
 Este arquivo deve conter os passos para preparar o ambiente de desenvolvimento:
 
-(Preencha de acordo com a stack escolhida.)
 # Setup do ambiente
 
 Este arquivo descreve como preparar o ambiente de desenvolvimento para este projeto (Windows, cmd.exe).
@@ -123,5 +122,3 @@ pytest -q
 # checar outputs
 python scripts\check_outputs.py
 ```
-
-Se quiser, eu posso criar um `scripts\run_all.bat` que automatiza a sequência e opcionalmente gera o PDF simples. Diga se deseja que eu o crie.
