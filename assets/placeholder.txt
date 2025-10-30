@@ -1,0 +1,1 @@
+Arquivo de recursos placeholder. Coloque imagens em `assets/images/`

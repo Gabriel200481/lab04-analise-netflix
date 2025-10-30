@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        run: echo "Setup step placeholder"
+      - name: Run tests
+        run: echo "Run tests placeholder"
+
+# Edite este workflow conforme sua stack (Python/Node/etc.).

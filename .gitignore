@@ -1,0 +1,34 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+# Ambiente virtual Python
+venv/
+*.env
+
+# Arquivos de cache do Python
+__pycache__/
+*.pyc
+
+# --- DADOS ---
+# Ignora todos os arquivos na pasta 'data',
+# pois eles são baixados (input) ou gerados (output).
+# O pipeline deve ser reprodutível sem eles.
+data/
+
+# --- ARQUIVOS DE BI ---
+# Arquivos do Power BI são binários, grandes e
+# não funcionam bem com versionamento de código.
+*.pbix
+
+# --- Configurações de IDE ---
+.vscode/
+
+# Arquivos OS / editor
+Thumbs.db
+.DS_Store
+
+# Logs e build
+logs/
+*.log
+dist/
+build/
