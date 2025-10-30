@@ -52,10 +52,3 @@ O script salvará o arquivo em `data\netflix_titles_CLEANED.csv`.
 6) Verificação rápida
 
  - No notebook `notebooks/01_setup.ipynb` execute as células — ele mostrará a versão do Python, a versão do pandas e indicará se `data/netflix_titles_CLEANED.csv` existe.
-
----
-
-Observações e limitações
-
- - Não posso instalar Python ou Power BI remotamente; execute os instaladores indicados localmente.
- - Se preferir conda em vez de venv, eu posso gerar um `environment.yml` e ajustar os scripts (diga-me se quer isso).
