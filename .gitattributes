@@ -1,0 +1,13 @@
+# Mark generated assets so GitHub Linguist excludes them from language statistics
+# Interactive plotly HTMLs (generated)
+assets/interactive/*.html linguist-generated
+
+# Figures and static outputs
+assets/figures/* linguist-generated
+output/* linguist-generated
+
+# Notebooks (considered generated for language stats)
+notebooks/*.ipynb linguist-generated
+
+# Optional: mark other generated artifacts
+data/* linguist-generated
