@@ -48,11 +48,3 @@ Arquivos gerados (pré-requisito): `data/netflix_tratado_final.csv` (saída do S
 4) O que apresentar na aula (Lab04S02)
 - Mostrar Página 2: explicar top países, especialização de gêneros e destacar insights do mapa.
 - Mostrar Página 3: tempos de adição por ano, evidências de sazonalidade por mês/ano.
-
-5) Observações técnicas
-- Se os nomes de países não forem reconhecidos pelo Power BI, padronize (ex.: "United States" vs "USA"). Eu posso ajudar a mapear aliases se precisar.
-- O script `src/prepare_powerbi.py` tenta localizar `data/netflix_tratado_final.csv`. Caso não exista, rode primeiro o `src/preprocess.py` do Sprint 1.
-
-Próximo passo sugerido
-- Gerar os CSVs com `src/prepare_powerbi.py` e abrir o Power BI, carregar os CSVs para montar as Páginas 2 e 3.
-- Se preferir, posso criar um notebook com exemplos de gráficos em Python (matplotlib/plotly) que espelhem os visuais do Power BI como rascunho.
