@@ -2,7 +2,6 @@
 
 Este arquivo lista, de forma organizada, todos os artefatos gerados no repositório, incluindo código, scripts, dados, visualizações e documentos. Use-o como referência rápida para localizar outputs e funções principais.
 
-> Gerado em: 2025-10-30
 
 ## Resumo executivo
 - Pipeline completo implementado: ETL (preprocess) → canonicalização de países → agregações para Power BI → visualizações interativas (Plotly) → figuras estáticas (matplotlib) → relatório `.docx`.
@@ -70,12 +69,3 @@ Status: testes executados e passaram (7 passed).
 - `*plotly*` — gera HTMLs interativos.
 - `boxplot_duration_by_rating` / `bar_duration_series` — figuras PNG para o relatório.
 - `generate` (docx) — monta o relatório final `.docx`.
-
-## Observações e recomendações
-- `data/country_aliases_mapping.csv` deve ser revisado e ajustado para corrigir aliases incomuns antes da publicação do dashboard final.
-- A conversão DOCX → PDF não está automatizada (requer Word/LibreOffice/Pandoc). Para um PDF rápido, gere a partir dos PNGs (podemos automatizar isso se desejar).
-- Em datasets muito maiores, considere processar com chunks ou usar Dask/Polars para performance.
-
----
-
-Se quiser, faço um commit com este `INVENTORY.md` e também posso gerar um `output/dashboard_netflix.pdf` simples a partir dos PNGs (opção rápida), ou tentar converter o DOCX para PDF se tiver Word instalado. Diga qual ação prefere em seguida.
