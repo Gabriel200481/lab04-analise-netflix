@@ -45,7 +45,3 @@ python -m pip install -r requirements.txt
 python src\analysis_duration.py
 ```
 
-4) Observações finais
-- O arquivo `assets/figures/*` contém as imagens que você pode usar no relatório (.doc/.pdf) ou importar no Power BI para compor a página final.
-- Se preferir, posso gerar o relatório final diretamente em .docx (preenchendo o template) — informe se quer essa opção.
-
