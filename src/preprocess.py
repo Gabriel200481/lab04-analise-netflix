@@ -1,22 +1,3 @@
-r"""
-Preprocessamento do dataset Netflix
-
-Entrada esperada: data/netflix_titles_CLEANED.csv
-Saída: data/netflix_tratado_final.csv
-
-O script realiza:
-- leitura do CSV (detecta nome de coluna comum para países/genres/directors)
-- conversão de date_added para datetime e criação de added_year, added_month
-- tratamento da coluna duration em duration_value e duration_unit
-- tratamento de nulos para countries/listed_in/directors
-- split + explode para countries, listed_in e directors (gera uma linha por combinação)
-- gravação do CSV final
-
-Uso (executar a partir da raiz do projeto):
-    python src\preprocess.py
-
-"""
-
 import os
 import re
 import sys
@@ -46,13 +27,11 @@ def choose_column(df, candidates):
 
 
 def parse_duration(value):
-    """Retorna (value:int or None, unit:str or None)."""
     if pd.isna(value):
         return (None, None)
     s = str(value).strip()
     if s == '':
         return (None, None)
-    # Ex: '90 min', '2 Seasons', '1 Season', '45 min'
     m = re.search(r"(?P<val>\d+)", s)
     u = None
     val = None
@@ -61,7 +40,6 @@ def parse_duration(value):
             val = int(m.group('val'))
         except Exception:
             val = None
-    # unit: check for 'min' or 'season'
     if 'min' in s.lower():
         u = 'min'
     elif 'season' in s.lower():
@@ -69,7 +47,6 @@ def parse_duration(value):
     elif 'seasons' in s.lower():
         u = 'Season'
     else:
-        # fallback: take last word
         parts = s.split()
         if len(parts) > 1:
             u = parts[-1]
@@ -77,7 +54,6 @@ def parse_duration(value):
 
 
 def split_to_list(series):
-    # turn NaN into 'Unknown' and then split on comma
     return series.fillna('Unknown').astype(str).str.split(r",\s*")
 
 
@@ -88,14 +64,12 @@ def preprocess(input_path, output_path, verbose=True):
     if verbose:
         print('Linhas originais:', len(df))
 
-    # detect common column names
     date_col = choose_column(df, ['date_added', 'dateAdded', 'Date Added'])
     duration_col = choose_column(df, ['duration', 'duration_str', 'Duration'])
     country_col = choose_column(df, ['country', 'countries', 'Country', 'Countries'])
     listed_col = choose_column(df, ['listed_in', 'listedIn', 'listed in', 'listed'])
     director_col = choose_column(df, ['director', 'directors', 'Director', 'Directors'])
 
-    # 1) date_added -> datetime + added_year, added_month
     if date_col:
         df[date_col] = pd.to_datetime(df[date_col], errors='coerce')
         df['added_year'] = df[date_col].dt.year
@@ -104,12 +78,9 @@ def preprocess(input_path, output_path, verbose=True):
         if verbose:
             print('Coluna de data nao encontrada; pulando added_year/added_month')
 
-    # Preserve/normalize release_year if present in original CSV (ano de lançamento)
     if 'release_year' in df.columns:
-        # convert to numeric, keep NA if invalid
         df['release_year'] = pd.to_numeric(df['release_year'], errors='coerce').astype('Int64')
 
-    # 2) duration -> duration_value, duration_unit
     if duration_col:
         parsed = df[duration_col].apply(parse_duration)
         df['duration_value'] = parsed.apply(lambda x: x[0])
@@ -120,7 +91,6 @@ def preprocess(input_path, output_path, verbose=True):
         df['duration_value'] = pd.NA
         df['duration_unit'] = pd.NA
 
-    # 3) tratar nulos e preparar listas para explode
     if country_col:
         df['countries_list'] = split_to_list(df[country_col])
     else:
@@ -136,12 +106,10 @@ def preprocess(input_path, output_path, verbose=True):
     else:
         df['directors_list'] = [['Unknown']] * len(df)
 
-    # 4) explode: cria uma linha por combinacao de country, genre e director
     df_exploded = df.explode('countries_list')
     df_exploded = df_exploded.explode('listed_in_list')
     df_exploded = df_exploded.explode('directors_list')
 
-    # opcional: renomear colunas de lista para nomes amigaveis
     df_exploded = df_exploded.rename(columns={
         'countries_list': 'country_exploded',
         'listed_in_list': 'genre_exploded',
@@ -152,7 +120,6 @@ def preprocess(input_path, output_path, verbose=True):
         print('Linhas apos explode:', len(df_exploded))
         print('Salvando arquivo:', output_path)
 
-    # salvar
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     df_exploded.to_csv(output_path, index=False)
     if verbose:
