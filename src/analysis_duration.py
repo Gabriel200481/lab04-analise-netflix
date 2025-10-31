@@ -13,7 +13,6 @@ import os
 import sys
 import pandas as pd
 import matplotlib
-# Use a non-interactive backend so scripts can run on machines without Tcl/Tk (headless)
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
@@ -41,7 +40,6 @@ def load_df(path):
 
 
 def boxplot_duration_by_rating(df):
-    # filtragem: duration_unit == 'min'
     col_dur = 'duration_value' if 'duration_value' in df.columns else 'duration'
     col_unit = 'duration_unit' if 'duration_unit' in df.columns else None
     rating_col = 'rating' if 'rating' in df.columns else None
@@ -51,13 +49,11 @@ def boxplot_duration_by_rating(df):
         return None
 
     df_films = df[(df[col_unit] == 'min') & df[col_dur].notna()]
-    # opcional: converter para numeric
     df_films = df_films.copy()
     df_films.loc[:, col_dur] = pd.to_numeric(df_films[col_dur], errors='coerce')
     df_films = df_films[df_films[col_dur].notna()]
 
     plt.figure(figsize=(12,8))
-    # Use matplotlib boxplot grouped by rating to avoid seaborn deprecation warnings
     gb = df_films.groupby('rating')[col_dur].apply(lambda s: s.dropna().tolist())
     labels = list(gb.index)
     data = [gb[label] for label in labels]
@@ -86,9 +82,7 @@ def bar_duration_series(df):
         print('Colunas necessárias para bar chart de series nao encontradas (expected: duration_value, duration_unit)')
         return None
 
-    # filtrar onde unit != 'min' e possivelmente type == 'TV Show' ou similar
     df_series = df[df[col_unit] != 'min']
-    # padronizar unidade (Season)
     df_series = df_series.copy()
     df_series.loc[:, col_dur] = pd.to_numeric(df_series[col_dur], errors='coerce')
     df_series = df_series[df_series[col_dur].notna()]
@@ -97,8 +91,6 @@ def bar_duration_series(df):
     counts = counts.sort_values('title_count', ascending=False)
 
     plt.figure(figsize=(10,6))
-    # Use matplotlib horizontal bar chart to avoid seaborn deprecation warnings
-    # Ensure col_dur values are strings for labeling
     y_labels = counts[col_dur].astype(str)
     x_vals = counts['title_count']
     if len(x_vals) == 0:
