@@ -1,14 +1,3 @@
-r"""
-Gerar figuras para a Sprint 3 (RQ4):
-- Boxplot de duração (filmes) por rating
-- Bar chart de durações de séries (ex.: 1 Season, 2 Seasons)
-
-Saídas (PNG): assets/figures/boxplot_duration_by_rating.png
-                 assets/figures/bar_duration_series.png
-
-Uso: python src\analysis_duration.py
-"""
-
 import os
 import sys
 import pandas as pd
