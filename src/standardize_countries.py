@@ -1,14 +1,3 @@
-r"""
-Standardiza nomes de países e gera um CSV canônico.
-
-Entrada: data/netflix_tratado_final.csv (linha por país/genre/director)
-Saída:
- - data/netflix_tratado_final_canonical.csv
- - data/country_aliases_mapping.csv
-
-Uso:
-    python src\standardize_countries.py
-"""
 import os
 import sys
 import pandas as pd
@@ -37,7 +26,6 @@ COMMON_MAP = {
     'korea, south': 'South Korea',
     'russia': 'Russian Federation',
     'laos': 'Lao People\'s Democratic Republic',
-    # adicione mais aliases conforme necessário
 }
 
 
@@ -47,26 +35,19 @@ def normalize_name(name):
     s = str(name).strip()
     if s == '' or s.lower() in ['nan', 'none']:
         return 'Unknown'
-    # remove extra whitespace and unify commas
     s = re.sub(r"\s+", ' ', s)
     s_clean = s.strip().lower()
-    # direct common map
     if s_clean in COMMON_MAP:
         return COMMON_MAP[s_clean]
-    # try pycountry lookup
     if pycountry:
         try:
-            # try by common name
             country = pycountry.countries.lookup(s)
-            # pycountry returns dynamic objects; use getattr to avoid static type checker
             return getattr(country, 'name', str(country))
         except Exception:
-            # fallback: try partial matches
             for c in pycountry.countries:
                 cname = getattr(c, 'name', '')
                 if s_clean in cname.lower():
                     return cname
-    # capitalize words as fallback (Title Case)
     return s.title()
 
 
@@ -92,7 +73,6 @@ def standardize():
 
     df['country_canonical'] = canonical
     df.to_csv(OUTPUT, index=False)
-    # save mapping
     map_df = pd.DataFrame(list(mapping.items()), columns=['alias','canonical'])
     map_df.to_csv(MAPPING_OUT, index=False)
     print('Salvo:', OUTPUT)
