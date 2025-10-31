@@ -1,16 +1,3 @@
-r"""
-Gera um arquivo .docx preenchendo seções do template com figuras e textos básicos.
-
-Entrada esperada:
- - docs/report_template.md (opcional)
- - imagens em assets/figures/ e assets/interactive/ (PNG/HTML)
-
-Saída:
- - output/dashboard_netflix.docx
-
-Uso:
-    python src\generate_report_docx.py
-"""
 import os
 import sys
 from docx import Document
