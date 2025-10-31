@@ -1,15 +1,3 @@
-r"""
-Gera visualizações interativas em Plotly e salva HTMLs em assets/interactive/
-
-Saídas:
- - assets/interactive/top10_countries.html
- - assets/interactive/country_genre_matrix.html
- - assets/interactive/annual_trends.html
- - assets/interactive/heatmap_month_year.html
-
-Uso:
-    python src\generate_plotly.py
-"""
 import os
 import sys
 import pandas as pd
